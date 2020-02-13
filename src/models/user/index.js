@@ -22,6 +22,6 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-User.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("TokenAuth", UserSchema);
