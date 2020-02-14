@@ -2,6 +2,7 @@ const express = require("express"); //e1
 const mongoose = require("mongoose");
 const userRouter = require("./src/routes/user"); //u1
 const passport = require("passport"); //p1
+const auth = require("./src/utils/auth");
 mongoose.connect(
   " mongodb://127.0.0.1:27017/basicAuth",
   { useNewUrlParser: true, useUnifiedTopology: true },
