@@ -12,5 +12,8 @@ mongoose.connect(
 const server = express(); //e2
 server.use(express.json());
 server.use(passport.initialize()); //initilizing passport p2
+server.get("/", (req, res) => {
+  res.send("connected to the Azure");
+});
 server.use("/user", userRouter); //u2
 server.listen(process.env.PORT || 3300, () => console.log("Server is running")); //e3
