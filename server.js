@@ -2,9 +2,12 @@ const express = require("express"); //e1
 const mongoose = require("mongoose");
 const userRouter = require("./src/routes/user"); //u1
 const passport = require("passport"); //p1
+const dotenv = require("dotenv");
 const auth = require("./src/utils/auth");
+
+dotenv.config();
 mongoose.connect(
-  " mongodb://127.0.0.1:27017/basicAuth",
+  process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   err => console.log(err ? err : "Mongo Connected")
 );

@@ -2,6 +2,7 @@
 
 const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
+const dotenv = require("dotenv");
 const User = require("../../models/user");
 const jwt = require("jsonwebtoken"); // generates token
 const jwtStrategy = require("passport-jwt").Strategy;
@@ -11,12 +12,13 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+dotenv.config();
 // to use the local strategy
 passport.use(new LocalStrategy(User.authenticate()));
-const password = "nehaStrive1234";
+//const password = process.env.KEY;
 const jwtConfig = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: password
+  secretOrKey: process.env.KEY
 };
 
 passport.use(
@@ -30,5 +32,6 @@ passport.use(
 );
 
 module.exports = {
-  generateToken: userInfo => jwt.sign(userInfo, password, { expiresIn: 1000 })
+  generateToken: userInfo =>
+    jwt.sign(userInfo, process.env.KEY, { expiresIn: 1000 })
 };
