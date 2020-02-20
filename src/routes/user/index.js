@@ -3,6 +3,17 @@ const User = require("../../models/user"); // import schema
 const passport = require("passport"); //import passport from utils
 //willing to keep the user list only to authorise (i.e to check username and password)
 const { generateToken } = require("../../utils/auth"); //connecting the token here from utils auth
+//https://www.npmjs.com/package/multer-azure-storage
+const multer = require("multer");
+const MulterAzureStorage = require("multer-azure-storage");
+const upload = multer({
+  storage: new MulterAzureStorage({
+    azureStorageConnectionString: process.env.AZURE_STORAGE,
+    containerName: "images",
+    containerSecurity: "blob"
+  })
+});
+
 const router = express.Router();
 
 // //getting list of users
@@ -42,4 +53,8 @@ router.post("/refresh", passport.authenticate("jwt"), async (req, res) => {
   res.send(req.user);
 }); //http://localhost:3300/user/refresh in authorization ==> TYPE: token ==> takee the accesscode of the user and the post
 
+router.post("/uploadImages", upload.single("images"), async (req, res) => {
+  console.log(req.file);
+  res.send("ok");
+});
 module.exports = router;
