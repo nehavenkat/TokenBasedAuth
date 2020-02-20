@@ -53,8 +53,20 @@ router.post("/refresh", passport.authenticate("jwt"), async (req, res) => {
   res.send(req.user);
 }); //http://localhost:3300/user/refresh in authorization ==> TYPE: token ==> takee the accesscode of the user and the post
 
-router.post("/uploadImages", upload.single("images"), async (req, res) => {
-  console.log(req.file);
-  res.send("ok");
-});
+//just uploading images
+// router.post("/uploadImages", upload.single("images"), async (req, res) => {
+//   console.log(req.file);
+//   res.send("ok");
+// });
+
+//to make it as the profile picture
+router.post(
+  "/uploadImages",
+  passport.authenticate("jwt"),
+  upload.single("images"),
+  async (req, res) => {
+    console.log(req.file);
+    res.send("ok");
+  }
+);
 module.exports = router;
